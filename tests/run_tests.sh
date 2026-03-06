@@ -64,6 +64,18 @@ bash "$SCRIPT" "$NUMBERS_FILE" "$photos_dir2" > /dev/null
 assert "'good photos' folder created" "[[ -d '$photos_dir2/good photos' ]]"
 
 echo ""
+echo "=== Test: Custom output folder path ==="
+photos_dir3="$(setup)"
+custom_out="$TESTS_DIR/tmp_custom_output"
+rm -rf "$custom_out"
+bash "$SCRIPT" "$NUMBERS_FILE" "$photos_dir3" "$custom_out" > /dev/null
+assert "Custom output folder created"        "[[ -d '$custom_out' ]]"
+assert "IMG_1001.jpg in custom folder"       "[[ -f '$custom_out/IMG_1001.jpg' ]]"
+assert "IMG_1001.jpg not in photos root"     "[[ ! -f '$photos_dir3/IMG_1001.jpg' ]]"
+assert "Default 'good photos' not created"   "[[ ! -d '$photos_dir3/good photos' ]]"
+rm -rf "$custom_out"
+
+echo ""
 echo "=== Test: Script exits with error on missing arguments ==="
 set +e
 bash "$SCRIPT" 2>/dev/null

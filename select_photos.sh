@@ -2,8 +2,8 @@
 
 set -euo pipefail
 
-if [[ $# -ne 2 ]]; then
-    echo "Usage: $0 <numbers_file> <photos_folder>"
+if [[ $# -lt 2 || $# -gt 3 ]]; then
+    echo "Usage: $0 <numbers_file> <photos_folder> [output_folder]"
     exit 1
 fi
 
@@ -20,7 +20,7 @@ if [[ ! -d "$photos_folder" ]]; then
     exit 1
 fi
 
-output_folder="$photos_folder/good photos"
+output_folder="${3:-$photos_folder/good photos}"
 mkdir -p "$output_folder"
 
 matched=0
