@@ -34,9 +34,9 @@ while IFS= read -r number || [[ -n "$number" ]]; do
         if [[ "$filename" == *"$number"* ]]; then
             echo "Moving: $filename"
             mv "$photo" "$output_folder/"
-            ((matched++))
+            matched=$((matched + 1))
         fi
-    done < <(find "$photos_folder" -maxdepth 1 -name "*.jpg" -o -name "*.JPG" -print0)
+    done < <(find "$photos_folder" -maxdepth 1 \( -name "*.jpg" -o -name "*.JPG" \) -print0)
 
 done < "$numbers_file"
 
